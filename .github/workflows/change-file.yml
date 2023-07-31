@@ -1,0 +1,46 @@
+name: Github File Change Test
+run-name: push 된 커밋 내 파일 변경 내역을 디렉토리별로 추적할 수 있는가?
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-file-change:
+    name: Test changed-files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check changed files
+        id: changed-files-yaml
+        uses: tj-actions/changed-files@v37
+        with:
+          files_yaml: |
+            frontend: 
+              - 'frontend/**/*'
+            backend:
+              - 'backend/**/*'
+            chore:
+              - '**/build.gradle'
+
+      - name: Print changed files of frontend scope
+        if: steps.changed-files-yaml.outputs.frontend_any_changed == 'true' # frontend 경로 내 파일에 변화가 있다면
+        run: |
+          echo "One or more frontend file(s) has changed."
+          echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.frontend_all_changed_files }}"
+
+      - name: Print changed files of backend scope
+        if: steps.changed-files-yaml.outputs.backend_any_changed == 'true' # backend 경로 내 파일에 변화가 있다면
+        run: |
+          echo "One or more backend file(s) has changed."
+          echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.backend_all_changed_files }}"
+
+      - name: Print changed files of chore scope
+        if: steps.changed-files-yaml.outputs.chore_any_changed == 'true' # chore 경로 내 파일에 변화가 있다면
+        run: |
+          echo "One or more chore file(s) has changed."
+          echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.chore_all_changed_files }}"
