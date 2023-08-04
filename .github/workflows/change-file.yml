@@ -72,4 +72,4 @@ jobs:
       - name: Print downloaded file
         run: |
           echo "Downloaded file contents:"
-          cat ${{ github.workspace }}/download/output
+          ls ${{ github.workspace }}/download
