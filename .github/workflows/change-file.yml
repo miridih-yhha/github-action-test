@@ -70,9 +70,7 @@ jobs:
           path: ${{ github.workspace }}/download/output
 
       - name: Print downloaded file
-        working-directory: ${{ github.workspace }}/download
+        working-directory: ${{ github.workspace }}/download/output
         run: |
-          ls -al
-          cd output
-          ls -al
-#          echo "Downloaded file contents:"
+          echo "Downloaded file contents:"
+          cat output
