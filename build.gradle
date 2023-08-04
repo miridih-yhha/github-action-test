@@ -1,1 +1,26 @@
-"가짜 그래들"
+task a {
+    def msg = "task 1"
+    println msg
+}
+
+tasks.register("c") {
+    def msg = "task 3"
+    println msg
+}
+
+tasks.register("d") {
+    def msg = "task 4"
+    println msg
+}
+
+tasks.named("d") {
+    def msg = "task 2"
+    println msg
+
+    finalizedBy c
+}
+
+task p {
+    dependsOn d
+    println "end"
+}

@@ -44,3 +44,15 @@ jobs:
         run: |
           echo "One or more chore file(s) has changed."
           echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.chore_all_changed_files }}"
+
+      - name: Create output file
+        if: exists(${{ github.workspace }}/output.txt) == false
+        run: |
+          echo "my example output file." >> ${{ github.workspace }}/output.txt
+          echo "Upload output file"
+
+      - name: Upload output file
+        uses: actions/upload-artifact@v2
+        with:
+          name: output
+          path: ${{ github.workspace }}/output.txt
