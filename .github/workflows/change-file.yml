@@ -61,16 +61,17 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: ${{ github.workspace }}/output
-          key: ${{ runner.os }}-output-${{ github.sha }}
+          key: ${{ runner.os }}-output
 
+      # download-artifact 내에 압축을 해제하는 과정도 포함되어 있으므로 이후에는 unzip 과정 없이 바로 압축 해제된 파일에 접근이 가능
       - name: Download file
         uses: actions/download-artifact@v3
         with:
           name: output
-          path: ${{ github.workspace }}/download/output
+          path: ${{ github.workspace }}/download
 
       - name: Print downloaded file
-        working-directory: ${{ github.workspace }}/download/output
+        working-directory: ${{ github.workspace }}/download
         run: |
           echo "Downloaded file contents:"
           cat output

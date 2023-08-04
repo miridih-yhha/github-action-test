@@ -14,22 +14,15 @@ jobs:
     name: 파일 다운로드
     runs-on: ubuntu-latest
     steps:
-      - name: Download file
-        uses: actions/download-artifact@v3
+      - name: Download output file from cache
+        uses: actions/cache@v3
         with:
-          name: ${{ github.event.inputs.file-name }}
-          path: ${{ github.workspace }}/${{ github.event.inputs.file-name }}
+          path: ${{ github.workspace }}/download
+          key: ${{ runner.os }}-${{ github.event.inputs.file-name }}
 
-      - name: Print workspace directory
+      - name: Print output file
+        working-directory: ${{ github.workspace }}/download
         run: |
-          ls -al ${{ github.workspace }}
-
-#      - name: Download output file from cache
-#        uses: actions/cache@v2
-#        with:
-#          path: ${{ github.workspace }}/output
-#          key: ${{ runner.os }}-output-${{ github.sha }}
-#          restore-keys: |
-#            ${{ runner.os }}-output-
-#            ${{ runner.os }}-
-#            ${{ runner.os }}
+          ls -al
+          echo "Print output file"
+          cat ${{ github.event.inputs.file-name }}
