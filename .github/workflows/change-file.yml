@@ -58,7 +58,7 @@ jobs:
           path: ${{ github.workspace }}/output
 
       - name: Upload output file to cache
-        uses: actions/cache@v3
+        uses: actions/cache/save@v3
         with:
           path: ${{ github.workspace }}/output
           key: ${{ runner.os }}-output

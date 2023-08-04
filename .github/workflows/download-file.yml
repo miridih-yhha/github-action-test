@@ -15,8 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download output file from cache
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
+          path: ${{ github.workspace }}/result
           key: ${{ runner.os }}-${{ github.event.inputs.file-name }}
 
       - name: Print output file
@@ -24,4 +25,14 @@ jobs:
         run: |
           ls -al
           echo "Print output file"
-          cat ${{ github.event.inputs.file-name }}
+#          cat ${{ github.event.inputs.file-name }}
+
+      - name: Print if cache exists
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: |
+          echo "캐시 존재함"
+
+      - name: Print if cache not exists
+        if: steps.cache.outputs.cache-hit == 'false'
+        run: |
+          echo "캐시 존재하지 않음"
