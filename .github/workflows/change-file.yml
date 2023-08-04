@@ -52,7 +52,13 @@ jobs:
           echo "Upload output file"
 
       - name: Upload output file
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: output
-          path: ${{ github.workspace }}/output.txt
+          path: ${{ github.workspace }}/output
+
+      - name: Upload output file to cache
+        uses: actions/cache/save@v3
+        with:
+          path: ${{ github.workspace }}/output
+          key: ${{ runner.os }}-output-${{ github.sha }}
