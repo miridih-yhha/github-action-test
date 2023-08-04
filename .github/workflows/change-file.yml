@@ -70,6 +70,8 @@ jobs:
           path: ${{ github.workspace }}/download/output
 
       - name: Print downloaded file
+        working-directory: ${{ github.workspace }}/download
         run: |
+          unzip output.zip
           echo "Downloaded file contents:"
-          ls ${{ github.workspace }}/download
+          cat output
