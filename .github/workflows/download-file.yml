@@ -17,7 +17,7 @@ jobs:
       - name: Download output file from cache
         uses: actions/cache/restore@v3
         with:
-          path: ${{ github.workspace }}/*
+          path: ${{ github.workspace }}/**/*
           key: ${{ runner.os }}-${{ github.event.inputs.file-name }}
 
       - name: Print output file
