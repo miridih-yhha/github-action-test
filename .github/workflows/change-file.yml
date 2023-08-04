@@ -62,3 +62,14 @@ jobs:
         with:
           path: ${{ github.workspace }}/output
           key: ${{ runner.os }}-output-${{ github.sha }}
+
+      - name: Download file
+        uses: actions/download-artifact@v3
+        with:
+          name: output
+          path: ${{ github.workspace }}/download/output
+
+      - name: Print downloaded file
+        run: |
+          echo "Downloaded file contents:"
+          cat ${{ github.workspace }}/download/output

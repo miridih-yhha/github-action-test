@@ -19,7 +19,18 @@ jobs:
         with:
           name: ${{ github.event.inputs.file-name }}
           path: ${{ github.workspace }}/${{ github.event.inputs.file-name }}
+
       - name: Print downloaded file
         run: |
           echo "Downloaded file contents:"
           cat ${{ github.workspace }}/${{ github.event.inputs.file-name }}
+
+#      - name: Download output file from cache
+#        uses: actions/cache@v2
+#        with:
+#          path: ${{ github.workspace }}/output
+#          key: ${{ runner.os }}-output-${{ github.sha }}
+#          restore-keys: |
+#            ${{ runner.os }}-output-
+#            ${{ runner.os }}-
+#            ${{ runner.os }}
