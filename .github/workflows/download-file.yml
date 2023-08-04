@@ -17,11 +17,11 @@ jobs:
       - name: Download output file from cache
         uses: actions/cache@v3
         with:
-          path: ${{ github.workspace }}/cache
+          path: ${{ github.workspace }}/${{ github.event.inputs.file-name }}
           key: ${{ runner.os }}-${{ github.event.inputs.file-name }}
 
       - name: Print output file
-        working-directory: ${{ github.workspace }}/cache
+        working-directory: ${{ github.workspace }}/${{ github.event.inputs.file-name }}
         run: |
           ls -al
           echo "Print output file"

@@ -58,9 +58,9 @@ jobs:
           path: ${{ github.workspace }}/output
 
       - name: Upload output file to cache
-        uses: actions/cache/save@v3
+        uses: actions/cache@v3
         with:
-          path: ${{ github.workspace }}/cache
+          path: ${{ github.workspace }}/output
           key: ${{ runner.os }}-output
 
       # download-artifact 내에 압축을 해제하는 과정도 포함되어 있으므로 이후에는 unzip 과정 없이 바로 압축 해제된 파일에 접근이 가능
