@@ -20,10 +20,9 @@ jobs:
           name: ${{ github.event.inputs.file-name }}
           path: ${{ github.workspace }}/${{ github.event.inputs.file-name }}
 
-      - name: Print downloaded file
+      - name: Print workspace directory
         run: |
-          echo "Downloaded file contents:"
-          cat ${{ github.workspace }}/${{ github.event.inputs.file-name }}
+          ls -al ${{ github.workspace }}
 
 #      - name: Download output file from cache
 #        uses: actions/cache@v2
