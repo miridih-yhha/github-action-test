@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download output file from cache
+        id: cache
         uses: actions/cache/restore@v3
         with:
           path: ${{ github.workspace }}/output
