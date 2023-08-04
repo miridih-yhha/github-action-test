@@ -73,6 +73,6 @@ jobs:
         working-directory: ${{ github.workspace }}/download
         run: |
           ls -al
-          unzip output
-          echo "Downloaded file contents:"
-          cat output
+          cd output
+          ls -al
+#          echo "Downloaded file contents:"
