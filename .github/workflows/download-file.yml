@@ -26,7 +26,7 @@ jobs:
         run: |
           ls -al
           echo "Print output file"
-#          cat ${{ github.event.inputs.file-name }}
+          cat ${{ github.event.inputs.file-name }}
 
       - name: Print if cache exists
         if: steps.cache.outputs.cache-hit == 'true'
