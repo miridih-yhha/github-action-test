@@ -31,6 +31,8 @@ jobs:
 
       - name: 업그레이드 커밋 (근데 배포 버전에서 push가 바로 될까?)
         run: |
+          git config user.email ${{ github.event.head_commit.author.email }}
+          git config user.name ${{ github.event.head_commit.author.name }}
           git commit -am "버전 업그레이드: $OLD_VERSION -> $NEW_VERSION"
           git tag -a $NEW_VERSION -m "버전 업그레이드: $OLD_VERSION -> $NEW_VERSION"
           git push origin main --follow-tags
