@@ -27,13 +27,15 @@ jobs:
           chmod +x ./upgrade-version.sh
           ./upgrade-version.sh ${{ github.event.inputs.version }}
           NEW_VERSION=$(cat version)
-          echo "버전 업그레이드 완료: $OLD_VERSION -> $NEW_VERSION"
+          
+          MESSAGE=(버전 업그레이드: $OLD_VERSION '->' $NEW_VERSION)
+          echo $MESSAGE
 
           echo "user name: $(git log -n 1 --pretty=format:%an)"
           echo "user email: $(git log -n 1 --pretty=format:%ae)"
           git config user.name "$(git log -n 1 --pretty=format:%an)"
           git config user.email "$(git log -n 1 --pretty=format:%ae)"
-          MESSAGE=(버전 업그레이드: $OLD_VERSION -> $NEW_VERSION)
+          
           git commit -am $MESSAGE
           git tag -a $NEW_VERSION -m $MESSAGE
           git push origin main --follow-tags
