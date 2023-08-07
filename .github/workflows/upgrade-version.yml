@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: 버전 업그레이드
+      - name: 버전 업그레이드 후 커밋 & 푸시
         run: |
           OLD_VERSION=$(cat version)
           chmod +x ./upgrade-version.sh
@@ -29,9 +29,6 @@ jobs:
           NEW_VERSION=$(cat version)
           echo "버전 업그레이드 완료: $OLD_VERSION -> $NEW_VERSION"
 
-      # 마지막 커밋의 저자를 그대로 사용
-      - name: 업그레이드 커밋 (근데 배포 버전에서 push가 바로 될까?)
-        run: |
           echo "user name: $(git log -n 1 --pretty=format:%an)"
           echo "user email: $(git log -n 1 --pretty=format:%ae)"
           git config user.name "$(git log -n 1 --pretty=format:%an)"
@@ -40,4 +37,3 @@ jobs:
           git commit -am $MESSAGE
           git tag -a $NEW_VERSION -m $MESSAGE
           git push origin main --follow-tags
-      
