@@ -39,6 +39,6 @@ jobs:
           git config user.name "$(git log -n 1 --pretty=format:%an)"
           git config user.email "$(git log -n 1 --pretty=format:%ae)"
           
-          git commit -am $MESSAGE
-          git tag -a $NEW_VERSION -m $MESSAGE
+          git commit -am "$MESSAGE"
+          git tag -a $NEW_VERSION -m "$MESSAGE"
           git push origin main --follow-tags
