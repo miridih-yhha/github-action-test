@@ -1,0 +1,37 @@
+name: Github Action Version Upgrade Test
+run-name: Github Action 버전 업그레이드 테스트
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 업그레이드할 버전
+        type: choice
+        required: true
+        options:
+          - major
+          - minor
+          - patch
+        default: patch
+
+jobs:
+  upgrade-version:
+    name: 애플리케이션 버전 업그레이드
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 버전 업그레이드
+        run: |
+          OLD_VERSION=$(cat version)
+          chmod +x ./upgrade-version.sh
+          ./upgrade-version.sh ${{ github.event.inputs.version }}
+          NEW_VERSION=$(cat version)
+          echo "버전 업그레이드 완료: $OLD_VERSION -> $NEW_VERSION"
+
+      - name: 업그레이드 커밋 (근데 배포 버전에서 push가 바로 될까?)
+        run: |
+          git commit -am "버전 업그레이드: $OLD_VERSION -> $NEW_VERSION"
+          git tag -a $NEW_VERSION -m "버전 업그레이드: $OLD_VERSION -> $NEW_VERSION"
+          git push origin main --follow-tags
+      
