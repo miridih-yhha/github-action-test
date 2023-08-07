@@ -1,0 +1,29 @@
+name: Github Action Version Rollback Test
+run-name: Github Action 버전 롤백 테스트
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+      inputs:
+        version:
+            description: 롤백할 버전
+            type: string
+            required: true
+
+jobs:
+  rollback:
+    name: 애플리케이션 버전 롤백
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 입력된 버전으로 롤백
+        run: |
+          ROLLBACK_VERSION=${{ github.event.inputs.version }}
+          echo "rollback to $ROLLBACK_VERSION"
+          git reset --hard $ROLLBACK_VERSION
+          BRANCH="rollback/$ROLLBACK_VERSION"
+          echo "create rollback branch $BRANCH"
+          git push origin $BRANCH

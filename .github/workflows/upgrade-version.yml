@@ -7,7 +7,7 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
-      version:
+      target-version:
         description: 업그레이드할 버전
         type: choice
         required: true
@@ -28,7 +28,7 @@ jobs:
         run: |
           OLD_VERSION=$(cat version)
           chmod +x ./upgrade-version.sh
-          ./upgrade-version.sh ${{ github.event.inputs.version }}
+          ./upgrade-version.sh ${{ github.event.inputs.target-version }}
           NEW_VERSION=$(cat version)
           
           MESSAGE="버전 업그레이드: $OLD_VERSION → $NEW_VERSION"
