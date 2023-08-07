@@ -4,7 +4,7 @@ run-name: push 된 커밋 내 파일 변경 내역을 디렉토리별로 추적�
 on:
   push:
     branches:
-      - main
+      - modify-file
 
 jobs:
   check-file-change:
