@@ -31,7 +31,7 @@ jobs:
           ./upgrade-version.sh ${{ github.event.inputs.version }}
           NEW_VERSION=$(cat version)
           
-          MESSAGE="버전 업그레이드: $OLD_VERSION -> $NEW_VERSION"
+          MESSAGE="버전 업그레이드: $OLD_VERSION → $NEW_VERSION"
           echo $MESSAGE
 
           echo "user name: $(git log -n 1 --pretty=format:%an)"
