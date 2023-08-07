@@ -32,7 +32,8 @@ jobs:
       # 마지막 커밋의 저자를 그대로 사용
       - name: 업그레이드 커밋 (근데 배포 버전에서 push가 바로 될까?)
         run: |
-          echo ${{ github.event.commits[0] }}
+          echo "user name: $(git log -n 1 --pretty=format:%an)"
+          echo "user email: $(git log -n 1 --pretty=format:%ae)"
           git config user.name "$(git log -n 1 --pretty=format:%an)"
           git config user.email "$(git log -n 1 --pretty=format:%ae)"
           MESSAGE=(버전 업그레이드: $OLD_VERSION -> $NEW_VERSION)
