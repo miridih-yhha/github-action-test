@@ -25,7 +25,10 @@ jobs:
         run: |
           ROLLBACK_VERSION=${{ github.event.inputs.version }}
           echo "rollback to $ROLLBACK_VERSION"
-          git reset --hard "$ROLLBACK_VERSION"
+          
           BRANCH="rollback/$ROLLBACK_VERSION"
-          echo "create rollback branch $BRANCH"
+          echo "checkout to rollback branch $BRANCH"
+          git checkout -b $BRANCH
+          git reset --hard "$ROLLBACK_VERSION"
+          
           git push origin $BRANCH
