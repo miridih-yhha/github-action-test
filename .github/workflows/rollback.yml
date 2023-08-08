@@ -17,7 +17,9 @@ jobs:
     name: 애플리케이션 버전 롤백
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: 입력된 버전으로 롤백
         run: |

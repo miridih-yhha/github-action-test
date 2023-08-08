@@ -22,7 +22,7 @@ jobs:
     name: 애플리케이션 버전 업그레이드
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: 버전 업그레이드 후 커밋 & 푸시
         run: |
