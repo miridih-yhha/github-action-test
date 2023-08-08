@@ -1,8 +1,7 @@
 name: Github Action Version Rollback Test
 run-name: Github Action 버전 롤백 테스트
 
-permissions:
-  contents: write
+permissions: write-all
 
 on:
   workflow_dispatch:
