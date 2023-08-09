@@ -26,13 +26,22 @@ jobs:
         with:
           token: ${{ secrets.WORKFLOW_TOKEN }}
 
-      - name: 버전 업그레이드 후 커밋 & 푸시
+      - name: 버전 업그레이드
+        id: upgrade-version
         run: |
           OLD_VERSION=$(cat version)
+          echo "old-version=${OLD_VERSION}" >> "$GITHUB_OUTPUT"
+          
           chmod +x ./upgrade-version.sh
           ./upgrade-version.sh ${{ github.event.inputs.target-version }}
-          NEW_VERSION=$(cat version)
           
+          NEW_VERSION=$(cat version)
+          echo "new-version=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: 커밋 & 푸시
+        run: |
+          OLD_VERSION=${{ steps.upgrade-version.outputs.old-version }}
+          NEW_VERSION=${{ steps.upgrade-version.outputs.new-version }}
           MESSAGE="버전 업그레이드: $OLD_VERSION → $NEW_VERSION"
           echo $MESSAGE
 
@@ -44,3 +53,15 @@ jobs:
           git commit -am "$MESSAGE"
           git tag -a $NEW_VERSION -m "$MESSAGE"
           git push origin main --follow-tags -f
+
+      - name: 새 버전 릴리즈 생성
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+        with:
+          tag_name: ${{ steps.upgrade-version.outputs.new-version }}
+          release_name: ${{ steps.upgrade-version.outputs.new-version }}
+          body: |
+              ${{ steps.upgrade-version.outputs.new-version }} 버전 릴리즈
+          draft: false
+          prerelease: false
