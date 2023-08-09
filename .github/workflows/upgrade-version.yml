@@ -41,4 +41,6 @@ jobs:
           
           git commit -am "$MESSAGE"
           git tag -a $NEW_VERSION -m "$MESSAGE"
-          git push origin main --follow-tags
+          git push origin main --follow-tags -f
+        with:
+          repo-token: ${{ secrets.WORKFLOW_TOKEN }}
