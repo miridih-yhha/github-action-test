@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
 
       - name: 버전 업그레이드 후 커밋 & 푸시
         run: |
@@ -42,5 +44,3 @@ jobs:
           git commit -am "$MESSAGE"
           git tag -a $NEW_VERSION -m "$MESSAGE"
           git push origin main --follow-tags -f
-        with:
-          repo-token: ${{ secrets.WORKFLOW_TOKEN }}
