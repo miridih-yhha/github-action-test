@@ -1,0 +1,20 @@
+name: First Workflow
+
+on: workflow_call
+
+jobs:
+  first-job:
+    name: first job
+    runs-on: ubuntu-latest
+    steps:
+      - name: first step
+        run: |
+          mkdir ${{ github.workspace }}/test
+          touch ${{ github.workspace }}/test/test.txt
+          ls -al ${{ github.workspace }}/test
+          echo "first job done"
+
+      - name: print result
+        run: |
+          echo "first job result"
+          ls -al ${{ github.workspace }}/test

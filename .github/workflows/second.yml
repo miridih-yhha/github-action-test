@@ -1,0 +1,13 @@
+name: Second Workflow
+
+on: workflow_call
+
+jobs:
+  first-job:
+    name: second job
+    runs-on: ubuntu-latest
+    steps:
+      - name: print result
+        run: |
+          echo "print first job result"
+          ls -al ${{ github.workspace }}/test

@@ -1,0 +1,22 @@
+name: Workflow use command test
+run-name: 워크플로 use 테스트
+
+on: workflow_dispatch
+
+jobs:
+  first:
+    name: run first workflow
+    uses: .github/workflows/first.yml
+
+  second:
+    name: run second workflow
+    uses: .github/workflows/second.yml
+
+  print-result:
+    name: first job 에서 만든 파일 ?
+    runs-on: ubuntu-latest
+    steps:
+      - name: print result
+        run: |
+          echo "print first job result"
+          ls -al ${{ github.workspace }}/test
