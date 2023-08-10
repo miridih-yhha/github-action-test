@@ -16,6 +16,8 @@ jobs:
     name: first job 에서 만든 파일 ?
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: print result
         run: |
           echo "print first job result"
