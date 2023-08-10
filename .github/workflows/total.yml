@@ -6,11 +6,11 @@ on: workflow_dispatch
 jobs:
   first:
     name: run first workflow
-    uses: .github/workflows/first.yml
+    uses: ./.github/workflows/first.yml
 
   second:
     name: run second workflow
-    uses: .github/workflows/second.yml
+    uses: ./.github/workflows/second.yml
 
   print-result:
     name: first job 에서 만든 파일 ?
