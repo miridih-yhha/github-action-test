@@ -24,8 +24,11 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/miridih-yhha/github-action-test/releases/latest)
-          echo "RESPONSE: $RESPONSE"
           echo "response=${RESPONSE}" >> $GITHUB_ENV
-          echo "response: ${{ env.response }}"
-#          UPLOAD_URL=${{ fromJson(env.RESPONSE) }}
-#          echo "UPLOAD_URL: $UPLOAD_URL"
+
+      - name: 태그와 업로드 경로 조회
+        run: |
+          UPLOAD_URL=${{ fromJson(env.RESPONSE).upload_url }}
+          TAG_NAME=${{ fromJson(env.RESPONSE).tag_name }}
+          echo "UPLOAD_URL: ${UPLOAD_URL}"
+          echo "TAG_NAME: ${TAG_NAME}"
