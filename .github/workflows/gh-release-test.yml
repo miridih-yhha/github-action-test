@@ -22,7 +22,7 @@ jobs:
 
       - name: 최신 릴리즈 버전 조회
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         run: |
           OLD_RELEASE=$(gh api \
             -H "Accept: application/vnd.github+json" \
@@ -60,7 +60,7 @@ jobs:
 
       - name: 버전업 태그 생성
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         run: |
           NEW_RELEASE=$(gh api \
           --method POST \
@@ -76,7 +76,7 @@ jobs:
 
       - name: 새 릴리즈에 api.jar 에셋 업데이트
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         run: |
           gh api \
           --method POST \
@@ -88,7 +88,7 @@ jobs:
 
       - name: 새 릴리즈에 consumer.jar 에셋 업데이트
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         run: |
           gh api \
           --method POST \
