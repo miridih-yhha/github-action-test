@@ -6,8 +6,12 @@ on:
     inputs:
       VERSION_TO_UPGRADE:
         description: 업그레이드할 버전
-        type: string
+        type: choice
         required: true
+        options:
+          - major
+          - minor
+          - patch
 
 jobs:
   release:
@@ -32,26 +36,26 @@ jobs:
           OLD_VERSION=${{ fromJson(env.old-release).tag_name }}
           echo "OLD_VERSION: ${OLD_VERSION}"
           
-          MAJOR=$(echo $OLD_VERSION | cut -d. -f1 | sed 's/v//')
-          MINOR=$(echo $OLD_VERSION | cut -d. -f2)
-          PATCH=$(echo $OLD_VERSION | cut -d. -f3)
+          major=$(echo $OLD_VERSION | cut -d. -f1 | sed 's/v//')
+          minor=$(echo $OLD_VERSION | cut -d. -f2)
+          patch=$(echo $OLD_VERSION | cut -d. -f3)
           
           INCREMENT_TYPE=${{ inputs.VERSION_TO_UPGRADE }}
-          if [ "$INCREMENT_TYPE" == "MAJOR" ]; then
-          ((MAJOR++))
-          MINOR=0
-          PATCH=0
-          elif [ "$INCREMENT_TYPE" == "MINOR" ]; then
-          ((MINOR++))
-          PATCH=0
-          elif [ "$INCREMENT_TYPE" == "PATCH" ]; then
-          ((PATCH++))
+          if [ "$INCREMENT_TYPE" == "major" ]; then
+          ((major++))
+          minor=0
+          patch=0
+          elif [ "$INCREMENT_TYPE" == "minor" ]; then
+          ((minor++))
+          patch=0
+          elif [ "$INCREMENT_TYPE" == "patch" ]; then
+          ((patch++))
           else
           echo "Invalid increment type!"
           exit 1
           fi
           
-          NEW_VERSION="v$MAJOR.$MINOR.$PATCH"
+          NEW_VERSION="v$major.$minor.$patch"
           echo "new-version=${NEW_VERSION}" >> $GITHUB_ENV
 
       - name: 버전업 태그 생성
