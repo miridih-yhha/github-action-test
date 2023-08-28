@@ -12,6 +12,7 @@ on:
           - major
           - minor
           - patch
+        default: patch
 
 jobs:
   release:
@@ -83,6 +84,7 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/miridih-yhha/github-action-test/releases/${{ fromJson(env.new-release).id }}/assets \
+          -f 'name=api.jar' \
           -f 'Content-Type=application/java-archive' \
           -f asset=@api.jar
 
@@ -95,5 +97,6 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/miridih-yhha/github-action-test/releases/${{ fromJson(env.new-release).id }}/assets \
+          -f 'name=consumer.jar' \
           -f 'Content-Type=application/java-archive' \
           -f asset=@consumer.jar
