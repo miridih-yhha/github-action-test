@@ -24,7 +24,5 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/miridih-yhha/github-action-test/releases/latest)" >> $GITHUB_ENV
-#          TAG_NAME=${{ fromJson(env.RESPONSE).tag_name }}
           UPLOAD_URL=${{ fromJson(env.RESPONSE).upload_url }}
-#          echo "TAG_NAME: $TAG_NAME"
           echo "UPLOAD_URL: $UPLOAD_URL"
