@@ -28,7 +28,8 @@ jobs:
 
       - name: 태그와 업로드 경로 조회
         run: |
-          UPLOAD_URL=${{ fromJson(env.RESPONSE).upload_url }}
-          TAG_NAME=${{ fromJson(env.RESPONSE).tag_name }}
+          echo "response: ${{ env.response }}"
+          UPLOAD_URL=${{ fromJson(env.response).upload_url }}
+          TAG_NAME=${{ fromJson(env.response).tag_name }}
           echo "UPLOAD_URL: ${UPLOAD_URL}"
           echo "TAG_NAME: ${TAG_NAME}"
