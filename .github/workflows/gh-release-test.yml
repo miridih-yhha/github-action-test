@@ -14,6 +14,10 @@ on:
           - patch
         default: patch
 
+env:
+  owner: miridih-yhha
+  repo: github-action-test
+
 jobs:
   release:
     name: Release New Version
@@ -26,9 +30,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         run: |
           OLD_RELEASE=$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/miridih-yhha/github-action-test/releases/latest)
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/${{ env.owner }}/${{ env.repo }}/releases/latest)
           
           echo "old-release=${OLD_RELEASE}" >> $GITHUB_ENV
 
@@ -67,7 +71,7 @@ jobs:
           --method POST \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/miridih-yhha/github-action-test/releases \
+          /repos/${{ env.owner }}/${{ env.repo }}/releases \
           -f tag_name=${{ env.new-version }} \
           -f target_commitish='main' \
           -f name=${{ env.new-version }} \
@@ -83,7 +87,7 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.WORKFLOW_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           -H "Content-Type: application/java-archive" \
-            "https://uploads.github.com/repos/miridih-yhha/github-action-test/releases/${{ fromJson(env.new-release).id }}/assets?name=api.jar" \
+            "https://uploads.github.com/repos/${{ env.owner }}/${{ env.repo }}/releases/${{ fromJson(env.new-release).id }}/assets?name=api.jar" \
             --data-binary "@api.jar"
 
       - name: 새 릴리즈에 consumer.jar 에셋 업데이트
@@ -94,5 +98,5 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.WORKFLOW_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           -H "Content-Type: application/java-archive" \
-            "https://uploads.github.com/repos/miridih-yhha/github-action-test/releases/${{ fromJson(env.new-release).id }}/assets?name=consumer.jar" \
+            "https://uploads.github.com/repos/${{ env.owner }}/${{ env.repo }}/releases/${{ fromJson(env.new-release).id }}/assets?name=consumer.jar" \
             --data-binary "@consumer.jar"
