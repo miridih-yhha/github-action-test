@@ -26,6 +26,8 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: 최신 릴리즈 버전 조회
+        id: get-latest-release
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         run: |
@@ -36,7 +38,14 @@ jobs:
           
           echo "old-release=${OLD_RELEASE}" >> $GITHUB_ENV
 
+      - name: 릴리즈 버전 조회 실패 시 최초 릴리즈로 간주
+        if: ${{ get-latest-release.outputs.exit_code != 0 }}
+        run: |
+          NEW_VERSION="v1.0.0"
+          echo "new-version=${NEW_VERSION}" >> $GITHUB_ENV
+
       - name: 버전업
+        if: ${{ get-latest-release.outputs.exit_code == 0 }}
         run: |
           OLD_VERSION=${{ fromJson(env.old-release).tag_name }}
           echo "OLD_VERSION: ${OLD_VERSION}"
