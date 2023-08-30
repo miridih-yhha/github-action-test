@@ -58,17 +58,16 @@ jobs:
           INCREMENT_TYPE=${{ inputs.VERSION_TO_UPGRADE }}
           if [ "$INCREMENT_TYPE" == "major" ]; then
           echo "upgrading major version"
-          MAJOR=$((MAJOR))+1
+          MAJOR=$((++MAJOR))
           MINOR=0
           PATCH=0
           elif [ "$INCREMENT_TYPE" == "minor" ]; then
           echo "upgrading minor version"
-          MINOR=$((MINOR))+1
+          MINOR=$((++MINOR))
           PATCH=0
           elif [ "$INCREMENT_TYPE" == "patch" ]; then
           echo "upgrading patch version"
-          PATCH=$((PATCH))+1
-          echo "patch: $PATCH"
+          PATCH=$((++PATCH))
           else
           echo "Invalid increment type!"
           exit 1
