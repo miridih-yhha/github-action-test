@@ -68,6 +68,7 @@ jobs:
           elif [ "$INCREMENT_TYPE" == "patch" ]; then
           echo "upgrading patch version"
           ((PATCH++))
+          echo "patch: $PATCH"
           else
           echo "Invalid increment type!"
           exit 1
