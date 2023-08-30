@@ -1,0 +1,20 @@
+name: environment-variable-test
+run-name: 환경변수명 확인 및 출력
+
+on: workflow_dispatch
+
+jobs:
+  print:
+    name: print build id
+    runs-on: ubuntu-latest
+    steps:
+      - name: Github Run ID 값을 이용?
+        run: |
+          echo "Github Run ID: ${{ github.run_id }}"
+          echo "Github Run Number: ${{ github.run_number }}"
+
+      - name: env 값이 환경변수로 export?
+        env:
+          BUILD_ID: ${{ github.run_id }}
+        run: |
+          echo "build id: $BUILD_ID"
