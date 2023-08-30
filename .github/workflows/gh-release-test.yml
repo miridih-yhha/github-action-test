@@ -53,22 +53,27 @@ jobs:
           major=$(echo $OLD_VERSION | cut -d. -f1 | sed 's/v//')
           minor=$(echo $OLD_VERSION | cut -d. -f2)
           patch=$(echo $OLD_VERSION | cut -d. -f3)
+          echo "major: $major, minor: $minor, patch: $patch"
           
           INCREMENT_TYPE=${{ inputs.VERSION_TO_UPGRADE }}
           if [ "$INCREMENT_TYPE" == "major" ]; then
+          echo "upgrading major version"
           ((major++))
           minor=0
           patch=0
           elif [ "$INCREMENT_TYPE" == "minor" ]; then
+          echo "upgrading minor version"
           ((minor++))
           patch=0
           elif [ "$INCREMENT_TYPE" == "patch" ]; then
+          echo "upgrading patch version"
           ((patch++))
           else
           echo "Invalid increment type!"
           exit 1
           fi
           
+          echo "NEW_VERSION: v$major.$minor.$patch"
           NEW_VERSION="v$major.$minor.$patch"
           echo "new-version=${NEW_VERSION}" >> $GITHUB_ENV
 
