@@ -39,13 +39,13 @@ jobs:
         continue-on-error: true
 
       - name: 릴리즈 버전 조회 실패 시 최초 릴리즈로 간주
-        if: ${{ get-latest-release.outcome != 'success' }}
+        if: ${{ steps.get-latest-release.outcome != 'success' }}
         run: |
           NEW_VERSION="v1.0.0"
           echo "new-version=${NEW_VERSION}" >> $GITHUB_ENV
 
       - name: 버전업
-        if: ${{ get-latest-release.outcome == 'success' }}
+        if: ${{ steps.get-latest-release.outcome == 'success' }}
         run: |
           OLD_VERSION=${{ fromJson(env.old-release).tag_name }}
           echo "OLD_VERSION: ${OLD_VERSION}"
