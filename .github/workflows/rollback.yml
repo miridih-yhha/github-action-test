@@ -16,18 +16,12 @@ jobs:
     name: 애플리케이션 버전 롤백
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: 입력된 버전으로부터 커밋 해시 획득
+        uses: actions/checkout@v3
         with:
+          ref: tags/${{ github.event.inputs.version }}
           fetch-depth: 0
 
-      - name: 입력된 버전으로 롤백
+      - name: 현재 커밋 확인
         run: |
-          ROLLBACK_VERSION=${{ github.event.inputs.version }}
-          echo "rollback to $ROLLBACK_VERSION"
-          
-          BRANCH="rollback/$ROLLBACK_VERSION"
-          echo "checkout to rollback branch $BRANCH"
-          git checkout -b $BRANCH
-          git reset --hard "$ROLLBACK_VERSION"
-          
-          git push origin $BRANCH
+          git log
