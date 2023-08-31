@@ -21,6 +21,7 @@ jobs:
         with:
           ref: tags/${{ github.event.inputs.version }}
           fetch-depth: 0
+          fetch-tags: true
 
       - name: 현재 커밋 확인
         run: |
