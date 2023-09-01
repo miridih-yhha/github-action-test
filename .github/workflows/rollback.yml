@@ -24,17 +24,6 @@ jobs:
         run: |
           git checkout tags/${{ github.event.inputs.version }}
 
-      - name: ${{ github.event.inputs.version }} 버전 릴리즈 조회
-        env:
-          GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-        run: |
-          RELEASE=$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/OWNER/REPO/releases/tags/${{ github.event.inputs.version }})
-          
-          echo "release=${RELEASE}" >> $GITHUB_ENV
-
       - name: 에셋 다운로드
         working-directory: .build/jar/
         run: |
