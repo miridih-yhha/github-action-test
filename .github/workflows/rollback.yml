@@ -24,6 +24,10 @@ jobs:
         run: |
           git checkout tags/${{ github.event.inputs.version }}
 
+      - name: 경로 없으면 만들기
+        run: |
+          mkdir -p .build/jar/
+
       - name: 에셋 다운로드
         working-directory: .build/jar/
         run: |
