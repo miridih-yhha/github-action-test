@@ -14,12 +14,17 @@ on:
           - patch
         default: patch
 
+  push:
+    branches:
+      - main
+
 env:
   owner: miridih-yhha
   repo: github-action-test
 
 jobs:
   release:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     name: Release New Version
     runs-on: ubuntu-latest
     steps:
