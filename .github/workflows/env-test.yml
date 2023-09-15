@@ -3,6 +3,11 @@ run-name: 환경변수명 확인 및 출력
 
 on: workflow_dispatch
 
+env:
+  STAGE: develop
+  SERVER_NAME1: develop
+  SERVER_NAME2: develop2
+
 jobs:
   print:
     name: print build id
@@ -18,3 +23,13 @@ jobs:
           BUILD_ID: ${{ github.run_id }}
         run: |
           echo "build id: $BUILD_ID"
+
+      - name: 스테이지 값과 서버네임 값이 동일하면 실행
+        if: ${{ env.STAGE == env.SERVER_NAME1 }}
+        run: |
+          echo "스테이지 값과 서버네임 값이 동일하면 실행"
+
+      - name: 스테이지 값과 서버네임2 값이 동일하면 실행
+        if: ${{ env.STAGE == env.SERVER_NAME2 }}
+        run: |
+          echo "스테이지 값과 서버네임2 값이 동일하면 실행"
