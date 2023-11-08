@@ -4,16 +4,16 @@ run-name: job 단위 조건문 동작 여부 테스트
 on: workflow_dispatch
 
 jobs:
-  set-env:
-    name: set env
+  prebuild:
+    name: prebuild
     runs-on: ubuntu-latest
     steps:
-      - name: set env
+      - name: prebuild
         run: |
           echo "CACHE_HIT=true" >> $GITHUB_OUTPUT
 
   print1:
-    needs: [set-env]
+    needs: [prebuild]
     if: needs.prebuild.outputs.CACHE_HIT != 'true'
     name: print if not true
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
           echo "CACHE HIT FALSE: ${{ needs.prebuild.outputs.CACHE_HIT }}"
 
   print2:
-    needs: [set-env]
+    needs: [prebuild]
     if: needs.prebuild.outputs.CACHE_HIT == 'true'
     name: print if true
     runs-on: ubuntu-latest
