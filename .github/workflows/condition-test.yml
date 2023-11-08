@@ -11,13 +11,14 @@ jobs:
         CACHE_HIT: ${{ steps.prebuild.outputs.CACHE_HIT }}
     steps:
       - name: prebuild
+        id: prebuild
         run: |
           echo "CACHE_HIT=true" >> $GITHUB_OUTPUT
 
   print1:
+    name: print if not true
     needs: [prebuild]
     if: needs.prebuild.outputs.CACHE_HIT != 'true'
-    name: print if not true
     runs-on: ubuntu-latest
     steps:
       - name: CACHE HIT 가 true 가 아닐 때에만 동작
@@ -25,9 +26,9 @@ jobs:
           echo "CACHE HIT FALSE: ${{ needs.prebuild.outputs.CACHE_HIT }}"
 
   print2:
+    name: print if true
     needs: [prebuild]
     if: needs.prebuild.outputs.CACHE_HIT == 'true'
-    name: print if true
     runs-on: ubuntu-latest
     steps:
       - name: CACHE HIT 가 true 일 때에만 동작
