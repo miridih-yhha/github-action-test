@@ -13,19 +13,21 @@ jobs:
           echo "CACHE_HIT=true" >> $GITHUB_OUTPUT
 
   print1:
+    needs: [set-env]
     if: needs.prebuild.outputs.CACHE_HIT != 'true'
-    name: print build id
+    name: print if not true
     runs-on: ubuntu-latest
     steps:
-      - name: Github Run ID 값을 이용?
+      - name: CACHE HIT 가 true 가 아닐 때에만 동작
         run: |
           echo "CACHE HIT FALSE: ${{ needs.prebuild.outputs.CACHE_HIT }}"
 
   print2:
+    needs: [set-env]
     if: needs.prebuild.outputs.CACHE_HIT == 'true'
-    name: print build id
+    name: print if true
     runs-on: ubuntu-latest
     steps:
-      - name: Github Run ID 값을 이용?
+      - name: CACHE HIT 가 true 일 때에만 동작
         run: |
           echo "CACHE HIT TRUE: ${{ needs.prebuild.outputs.CACHE_HIT }}"
