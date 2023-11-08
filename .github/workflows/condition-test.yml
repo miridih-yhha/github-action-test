@@ -1,0 +1,31 @@
+name: condition-test
+run-name: job 단위 조건문 동작 여부 테스트
+
+on: workflow_dispatch
+
+jobs:
+  set-env:
+    name: set env
+    runs-on: ubuntu-latest
+    steps:
+      - name: set env
+        run: |
+          echo "CACHE_HIT=true" >> $GITHUB_OUTPUT
+
+  print1:
+    if: needs.prebuild.outputs.CACHE_HIT != 'true'
+    name: print build id
+    runs-on: ubuntu-latest
+    steps:
+      - name: Github Run ID 값을 이용?
+        run: |
+          echo "CACHE HIT FALSE: ${{ needs.prebuild.outputs.CACHE_HIT }}"
+
+  print2:
+    if: needs.prebuild.outputs.CACHE_HIT == 'true'
+    name: print build id
+    runs-on: ubuntu-latest
+    steps:
+      - name: Github Run ID 값을 이용?
+        run: |
+          echo "CACHE HIT TRUE: ${{ needs.prebuild.outputs.CACHE_HIT }}"
