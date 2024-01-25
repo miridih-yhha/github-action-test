@@ -1,0 +1,52 @@
+name: concurrency-test
+run-name: job 동시 실행 여부 테스트
+
+on: workflow_dispatch
+
+jobs:
+  step1:
+    name: step1
+    runs-on: ubuntu-latest
+    concurrency:
+        group: group1
+    steps:
+      - name: step1
+        run: |
+          echo "step1"
+          sleep 10
+          echo "step1 done"
+  step2:
+    name: step2
+    runs-on: ubuntu-latest
+    concurrency:
+        group: group2
+    steps:
+      - name: step2
+        run: |
+          echo "step2"
+          sleep 10
+          echo "step2 done"
+  step3:
+    name: step3
+    runs-on: ubuntu-latest
+    concurrency:
+        group: group2
+    needs: [step2]
+    steps:
+      - name: step3
+        run: |
+          echo "step3"
+          sleep 10
+          echo "step3 done"
+  step4:
+    name: step4
+    runs-on: ubuntu-latest
+    concurrency:
+        group: group1
+    needs: [step1]
+    steps:
+      - name: step4
+        run: |
+          echo "step4"
+          sleep 10
+          echo "step4 done"
